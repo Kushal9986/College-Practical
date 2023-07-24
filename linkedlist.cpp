@@ -81,6 +81,48 @@ void deletelast(struct node*s)
 	free(t);
 }
 
+void randominsert(struct node* s,int data)
+{
+	struct node*t=s;
+	struct node*t1,*n;
+	
+	n=(struct node*)malloc(sizeof(struct node));
+	n->item=data;
+	
+	int p;
+	cout<<"enter position u want to enter your node"<<endl;
+	cin>>p;
+	
+	for(int i=1; i<p; i++)
+	{
+		t1=t;
+		t=t->next;
+	}
+	
+	t1->next=n;
+	n->next=t;
+}
+
+void deleterandom(struct node *s)
+{
+	struct node*t,*t1;
+	t=s;
+	
+	int p;
+	cout<<"enter position u want to delete your node"<<endl;
+	cin>>p;
+	
+	for(int i=1; i<p; i++)
+	{
+		t1=t;
+		t=t->next;
+	}
+	
+	t1->next=t->next;
+	free(t);
+}
+
+
 
 int main()
 {
@@ -107,5 +149,19 @@ int main()
 	deletelast(start);
 	cout<<"\t\t\t\t\tnodes after deleting last node"<<endl;
 	view(start);
+	
+		insertatlast(60,&start);
+	insertatlast(50,&start);
+	cout<<"\t\t\t\t\tnodes after adding value at last node"<<endl;
+	view(start);
+	
+	randominsert(start,70);
+	cout<<"\t\t\t\t\tnodes after adding value at random position"<<endl;
+	view(start);
+	
+	deleterandom(start);
+	cout<<"\t\t\t\t\tnodes after deleting value at random position"<<endl;
+	view(start);
+	
 	return 0;
 }
