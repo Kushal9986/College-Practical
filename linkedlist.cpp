@@ -7,6 +7,8 @@ struct node
 	struct node*next;
 };
 
+//function to add lastnode
+
 void insertatlast(int data,struct node **s)
 {
 	struct node*n;
@@ -30,6 +32,8 @@ void insertatlast(int data,struct node **s)
 	}
 }
 
+//function to view node values
+
 void view(struct node*s)
 {int i=1;
 	while(s)
@@ -41,6 +45,8 @@ void view(struct node*s)
 	}
 }
 
+//function to delete first node
+
 void deletefirst(struct node**s)
 {
 	struct node *t;
@@ -48,6 +54,9 @@ void deletefirst(struct node**s)
 	*s=t->next;
 	free(t);
 }
+
+//function to insert first node
+
 void insertatfirst(struct node** s,int data)
 {
 	struct node*n,*t;
@@ -57,6 +66,8 @@ void insertatfirst(struct node** s,int data)
 	*s=n;
 	(*s)->next=t;
 }
+
+//function to delete last node
 
 void deletelast(struct node*s)
 {
