@@ -1,291 +1,447 @@
 #include<iostream>
 using namespace std;
 
-																//structure of node
-																
-																
-struct node 
+
+struct node
 {
-	int item;
+	int data;
 	struct node*next;
 };
 
-															//function to add lastnode
-
-void insertatlast(struct node **s)
+						//create node
+void createnode(struct node**s)
 {
-	int data;
-	cout<<"Enter value of your last node"<<endl;
-	cin>>data;
+	int no;
+	struct node*n;
 	
+	cout <<"enter the number of nodes you want to create"<<endl;
+	cin>>no;
+	
+	struct node*curr=*s;//for traversing to last node so that we can add new node to last node
+	
+	for (int i=1; i<=no; i++)
+	{
+		if(i==1)//for first node
+		{
+		n=(struct node*) malloc (sizeof (struct node));
+		cout<<"Enter value of node  "<<i<<" :"<<endl;
+		cin>>n->data;
+		n->next=NULL;
+		curr=n;
+		*s=n;
+		}
+		else
+		{
+		n=(struct node*) malloc (sizeof (struct node));
+		cout<<"Enter value of node  "<<i<<" :"<<endl;
+
+		cin>>n->data;
+		
+		curr->next=n;//for add new node to last
+		curr=curr->next;//for pointing curr to last node.
+		}
+	}
+}
+
+
+							//insert first function
+void insertatfirst(struct node **s)
+{
 	struct node*n;
 	n=(struct node*)malloc(sizeof(struct node));
-	n->item=data;
-	n->next=NULL;
+	
+	cout<<"Enter value :";
+	cin>>n->data;
+	
 	if(*s==NULL)
 	{
-		*s=n;
+		*s=n;//adding new node address to start
+		n->next=NULL;
+		cout<<"\t\t\t\t\t\tNode inserted at first"<<endl;
 	}
 	
 	else
 	{
-		struct node*t;
-		t=*s;
-		while(t->next!=NULL)
+		n->next=*s;//linking new node to current first node so that current first node become second  node
+		*s=n;//adding new node address to start
+		cout<<"\t\t\t\t\t\tNode inserte at first"<<endl;
+	}	
+}
+
+									//insert at last function
+void insertatlast(struct node *s)
+{	struct node *n,*curr;
+	
+	if(s==NULL)
+	{
+		cout<<"\t\t\t\t\t\tList is empty. "<<"\n"<<"\t\t\t\t\t\tchoose option a."<<endl;
+		return;
+	}
+	
+	else
+	{
+		n=(struct node*)malloc(sizeof(struct node));
+		n->next=NULL;
+		
+		cout<<"Enter the value :";
+		cin>>n->data;
+	
+		curr=s;
+		while(curr->next!=NULL)//for traversing to last node
 		{
-			t=t->next;
+			curr=curr->next;
 		}
-		t->next=n;
+		curr->next=n;//adding new to last
+		cout<<"node inserted at last"<<endl;
 	}
-	cout<<"node inserted"<<endl;
 }
-
-
-																	//function to insert first node
-
-void insertatfirst(struct node** s)
+										//fuction for insert at particular position
+void insertat(struct node **s)
 {
-	int data;
-	cout<<"Enter value of your first node"<<endl;
-	cin>>data;
-	
-	
-	struct node*n,*t;
-	n=(struct node*)malloc(sizeof(struct node));
-	n->item=data;
-	t=*s;
-	*s=n;
-	(*s)->next=t;
-	cout<<"node inserted"<<endl;
-}
-
-									//function to enter random node
-																			
-void randominsert(struct node* s)
-{	
-
-	int p;
-	cout<<"enter position u want to enter your node"<<endl;
-	cin>>p;
-	
-	int data;
-	cout<<"Enter value of your random node"<<endl;
-	cin>>data;
-	
-	struct node*t=s;
-	struct node*t1,*n;
-	
-	n=(struct node*)malloc(sizeof(struct node));
-	n->item=data;
-	
-	for(int i=1; i<p; i++)
+	if(*s==NULL)
 	{
-		t1=t;
-		t=t->next;
+		cout<<"List is empty choose option a "<<endl;
+		return;
 	}
-	
-	t1->next=n;
-	n->next=t;
-	cout<<"node inserted"<<endl;
-}
-
-
-													//function to delete first node
-
-void deletefirst(struct node**s)
-{
-	struct node *t;
-	t=*s;
-	*s=t->next;
-	free(t);
-	cout<<"node deleted"<<endl;
-}
-
-
-
-												//function to delete last node
-
-void deletelast(struct node*s)
-{
-	struct node*t,*t1;
-	t=s;
-	while(t->next!=NULL)
-	{	t1=t;
-		t=t->next;
-	}
-	t1->next =NULL;
-	free(t);
-		cout<<"node deleted"<<endl;
-
-}
-
-
-								//function to delete random node
-void deleterandom(struct node *s)
-{
-	int p;
-	cout<<"enter position u want to delete your node"<<endl;
-	cin>>p;
-	
-	struct node*t,*t1;
-	t=s;
-	
-	for(int i=1; i<p; i++)
+	else if((*s)->next==NULL)
 	{
-		t1=t;
-		t=t->next;
+		cout<<"List has only one node choose option a or d"<<endl;
+		return;
 	}
 	
-	t1->next=t->next;
-	free(t);
-		cout<<"node deleted"<<endl;
+	struct node*curr,*prev,*n;
+	int position,val;
+	int i=1;
+	
+	pos:
+	cout<<"Enter position you want to add new node:";
+	cin>>position;
 
-}
+	
 
-											//function to view node values
-
-void view(struct node*s)
-{int i=1;
-	while(s)
+	//for first position
+	if(position==1)
 	{
-	    
-		cout<<"value at node "<<i<<" is "<<s->item<<endl;
-		s=s->next;
-		i=i+1;
+		cout<<"choose option a for first position"<<endl;
+		return;
+	}
+	//othe than first
+	else 
+	{	//for invalid position
+		if(position <=0)
+		{
+			cout<<"Invalid position"<<endl;
+			goto pos;
+		}
+		//for valid position--------------
+		else
+		{
+			curr=*s;
+			while(i<=position-1&&curr->next!=NULL)
+			{
+				prev=curr;
+				curr=curr->next;
+				i++;
+			}
+			//for last
+			if(curr->next==NULL&&i==position-1)
+			{
+				cout<<"You have entered the last position .please choose insert at last for that"<<endl;
+				return;
+			}
+			//for not available
+			else if(i<position-1)
+			{
+				cout<<"Entered unavailable position"<<endl;
+				return;
+			}
+			//for available
+			else
+			{		
+				n=(struct node*)malloc(sizeof(struct node));
+				cout<<"Enter the value:";
+				cin>>n->data;
+				
+				prev->next=n;
+				n->next=curr;
+				cout<<"node inserted at position"<<position;
+			}
+		}
 	}
 }
 
-									//here begins your main function
+
+												//deletefirst
+void deletefirst(struct node **s)
+{
+	if(*s==NULL)
+	{
+		cout<<"List is empty. choose option a "<<endl;
+		return;
+	}
+	struct node* curr;
+	
+	if((*s)->next==NULL)
+	{
+		free(*s);
+		*s=NULL;
+		cout<<"if worked node deleted"<<endl;
+		cout<<"first node deleted"<<endl;
+	}
+	else
+	{
+		curr=(*s)->next;
+		free(*s);
+		*s=curr;
+		cout<<"fist node deleted"<<endl;
+	}
+}
+
+											//deletelast
+void deletelast(struct node**s)
+{
+	if(*s==NULL)
+	{
+		cout<<"list is empty. choose option a ."<<endl;
+		return;
+	}
+	
+	if((*s)->next==NULL)
+	{
+		
+		cout<<"list has only one node. So choose a or d or f "<<endl;
+		return;
+	}
+	
+	struct node*curr=NULL;
+	struct node*prev=NULL;
+	if((*s)->next!=NULL)
+	{
+		curr=*s;
+		while(curr->next!=NULL)
+		{
+			prev=curr;
+			curr=curr->next;
+		}
+			free(curr);
+			prev->next=NULL;
+			cout<<"last node deleted"<<endl;
+	}
+}
+
+
+												//delete random
+void deleterandom(struct node**s)
+{
+	if(*s==NULL)
+	{
+		cout<<"List is empty choose other option"<<endl;
+		return;
+	}
+	
+	if((*s)->next == NULL)
+	{
+		cout<<"List has only one node choose right option"<<endl;
+		return;
+	}
+	pos:
+	int position;
+	int i=1;
+	cout<<"Enter position:";
+	cin>>position;
+	
+	//for first position
+	if(position==1)
+	{
+		cout<<"choose option delete at first for that"<<endl;
+		return;
+	}
+	//for other than first
+	
+	struct node*curr=NULL;
+	struct node*prev=NULL;
+	
+		//for invalid
+
+	if(position<=0)
+	{
+		cout<<"Enter valid position"<<endl;
+		goto pos;
+	}
+	//for valid position
+	
+
+	
+	else
+	{
+		curr=*s;
+		
+		while(i<=position-1&&curr->next!=NULL)
+		{
+			prev=curr;
+			curr=curr->next;
+			i++;
+		}
+		//for last
+		if(curr->next==NULL &&  i==position)
+		{
+			cout<<"you have selected last node please choose delete last for that"<<endl;
+			return;
+		}
+		//for unavailable
+		if(i<position)
+		{
+			cout<<"position not available"<<endl;
+			return;
+		}
+		//for available
+		else
+		{
+			prev->next=curr->next;
+			free(curr);
+			cout<<"node deleted at your desired position"<<endl;
+		}
+	
+	}
+	
+}
+
+							//reverse the node
+
+void reverse(struct node**s )
+{
+	struct node*head=*s;
+	struct node*curr=*s;
+	struct node*temp=*s;
+	while(head->next !=NULL)
+	{
+		while(curr->next!=NULL)
+		{
+			curr=curr->next;
+		}
+		*s=curr;
+		
+		while(head->next!=curr)
+		{
+			temp=head;
+			while(temp->next!=curr)
+			{
+				temp=temp->next;
+			}
+			curr->next=temp;
+			curr=temp;
+		}
+		head->next=NULL;
+		curr->next=head;
+	}
+}
+
+
+
+
+												//view function
+void view(struct node *s )
+{
+	int i=1;
+	if(s==NULL)
+	{
+		cout<<"\t\t\t\t\t\tlist is empty"<<endl;
+	}
+	else
+	{
+		cout<<"\t\t\t\t\t\tHere is your linked list"<<endl;
+		while(s)
+		{
+			cout<<"value of node "<<i<<" is:"<<s->data<<endl;
+			s=s->next;
+			i++;
+		}
+	}
+}
 
 int main()
 {
+	struct node*start=NULL;//head node pointer
 	
-	struct node *start=NULL;
-	char choice;
-	int j=0;
-	cout<<"\t\t\t\t\tWelcome to linked list"<<endl;
-	rechoose:
+	char choice[50];
 	
-	cout<<"\n\nDo you want to enter value in node?(y/n):"<<endl;
+	char op;
+	
+	cout<<"do you want to start your linked list (y/n)"<<endl;
 	cin>>choice;
 	
-
-	if(choice=='y')
+	if (choice[0]=='y')
 	{
-		insertatlast(&start);
-		j=j+1;
-		if(j<1)
-		{
-		goto rechoose;
-		}
-		
-		else
-		{
-				goto options;
-		}
+		createnode(&start);
 	}
-	
 	else
 	{
-			cout<<"\t\t\t\t\tnodes after adding first node"<<endl;
-			view(start);
+		cout<<"Thanks for using"<<endl;
+		return 0;
 	}
+
 	
-										//options for operations on linked list
+	
 	options:
-
-char option;
-
-
-cout<<" \n\n\t\t\t\t\t\tnow you have options below"<<endl;
-cout<<"a-> insert value at first node"<<endl;
-cout<<"b-> insert value at last node"<<endl;
-cout<<"c-> insert value at random node"<<endl;
-cout<<"d-> delete value at first node"<<endl;
-cout<<"e-> delete value at first node"<<endl;
-cout<<"f-> delete value at first node"<<endl;
-cout<<"g->view my linked list"<<endl;
-cout<<"h->Exit the program"<<endl;
-
-cout<<"\nEnter your option"<<endl;
-cin>>option;
-
-switch(option)
-{
+	cout<<"\n\n"<<"\t\t\t\t\t\t--------------------------"<<"\n\t\t\t\t\t\tNow you have options below"<<"\n\t\t\t\t\t\t--------------------------"<<endl;
+	cout<<"\n\n\t\t\t\t\t\ta->Insert at first"<<endl;
+	cout<<"\t\t\t\t\t\tb->view my list"<<endl;
+	cout<<"\t\t\t\t\t\tc->Exit the program"<<endl;
+	cout<<"\t\t\t\t\t\td->Insert at last"<<endl;
+	cout<<"\t\t\t\t\t\te->Insert at"<<endl;
+	cout<<"\t\t\t\t\t\tf->delete first"<<endl;
+	cout<<"\t\t\t\t\t\tg->delete last"<<endl;
+	cout<<"\t\t\t\t\t\th->delete random"<<endl;
+	cout<<"\t\t\t\t\t\ti->reverse the linked list "<<endl;
+	cout<<"Enter your option:";
+	cin>>op;
+	
+	
+	switch(op)
+	{
 		case 'a':
 		insertatfirst(&start);
-	break;
-	
+		break;
+		
 		case 'b':
-		insertatlast(&start);
-	break;
-	
-		case 'c':
-		randominsert(start);
-	break;
-	
-		case 'd':
-		deletefirst(&start);
-	break;
-	
-		case 'e':
-		deletelast(start);
-	break;
-	
-		case 'f':
-		deleterandom(start);
-	break;
-	
-		case 'g':
 		view(start);
-	break;
-	
-			case 'h':
-		goto exit;
-	break;
-	
-	default :
-	cout<<"U have entered a wrong choice"<<endl;
-}
+		break;
+		
+		
+		case 'c':
+		return 0;
+		break;
+		
+		case 'd':
+		insertatlast(start);
+		break;
+		
+		case 'e':
+		insertat(&start);
+		break;
 
-goto options;
+		case 'f':
+		deletefirst(&start);
+		break;
+		
+		case 'g':
+		deletelast(&start);
+		break;
+		
+		case 'h':
+		deleterandom(&start);
+		break;
+		
+		case 'i':
+		reverse(&start);
+		break;
 		
 		
-	/*
-	
-	insertatlast(30,&start);
-	insertatlast(40,&start);
-	view(start);
-	
-	deletefirst(&start);
-	
-	cout<<"\t\t\t\t\tnodes after deleting first node"<<endl;
-	view(start);
-	
-	insertatfirst(&start,10);
-	cout<<"\t\t\t\t\tnodes after adding value at first node"<<endl;
-	view(start);
-	
-	deletefirst(&start);
-	cout<<"\t\t\t\t\tnodes after deleting first node"<<endl;
-	view(start);
-	
-	deletelast(start);
-	cout<<"\t\t\t\t\tnodes after deleting last node"<<endl;
-	view(start);
-	
-		insertatlast(60,&start);
-	insertatlast(50,&start);
-	cout<<"\t\t\t\t\tnodes after adding value at last node"<<endl;
-	view(start);
-	
-	randominsert(start,70);
-	cout<<"\t\t\t\t\tnodes after adding value at random position"<<endl;
-	view(start);
-	
-	deleterandom(start);
-	cout<<"\t\t\t\t\tnodes after deleting value at random position"<<endl;
-	view(start);*/
-	exit:
+		default:
+		cout<<"you have entered a wrong choice"<<endl;
+		
+	}
+	goto options;
 	return 0;
+	
 }
