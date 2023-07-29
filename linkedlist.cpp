@@ -421,6 +421,78 @@ void reverse(struct node**s )
 	cout<<"linked list reversed"<<endl;
 	
 }
+																		//sort the linked list ascending order
+																		
+void sortascend(struct node*s)
+{
+	if(s==NULL||s->next==NULL)
+	{
+		cout<<"Need atleat 2 node to sort the list"<<endl;
+		return;
+	}	
+	
+	struct node*curr=s;
+	struct node*temp=curr->next;
+	int val;
+	
+	for(int i=1; i<=4; i++)
+	{
+		for(int j=i+1; j<=5; j++ )
+		{
+			if((temp->data)<(curr->data))
+			{
+				val=curr->data;
+				curr->data=temp->data;
+				temp->data=val;
+			}
+			
+			temp=temp->next;
+		}
+		curr=curr->next;
+		temp=curr->next;
+	}
+	cout<<"list sorted"<<endl;
+}
+											//sort in descending order
+
+void sortdescend(struct node*s)
+{
+	if(s==NULL||s->next==NULL)
+	{
+		cout<<"Need atleat 2 node to sort the list"<<endl;
+		return;
+	}
+	
+	struct node*curr=s;
+	struct node*temp=curr->next;
+	int val;
+	
+	for(int i=1; i<=4; i++)
+	{
+		for(int j=i+1; j<=5; j++ )
+		{
+			if((temp->data)>(curr->data))
+			{
+				val=curr->data;
+				curr->data=temp->data;
+				temp->data=val;
+			}
+			
+			temp=temp->next;
+		}
+		curr=curr->next;
+		temp=curr->next;
+	}
+	cout<<"list sorted"<<endl;
+}
+
+
+
+
+
+
+
+
 												//view function
 void view(struct node *s )
 {
@@ -476,6 +548,8 @@ int main()
 	cout<<"\t\t\t\t\t\th->view my list"<<endl;
 	cout<<"\t\t\t\t\t\ti->reverse the linked list "<<endl;
 	cout<<"\t\t\t\t\t\tj->Exit the program"<<endl;
+	cout<<"\t\t\t\t\t\tk->Sort list in descending order"<<endl;
+	cout<<"\t\t\t\t\t\tl->Sort list in ascending order"<<endl;
 
 
 	cout<<"Enter your option:";
@@ -523,6 +597,14 @@ int main()
 		
 		case 'j':
 		return 0;
+		break;
+		
+		case 'k':
+		sortdescend(start);
+		break;
+		
+		case 'l':
+		sortascend(start);
 		break;
 		
 		
