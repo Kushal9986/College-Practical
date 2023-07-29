@@ -95,8 +95,8 @@ void insertatlast(struct node *s)
 		cout<<"node inserted at last"<<endl;
 	}
 }
-										//fuction for insert at particular position
-void insertat(struct node **s)
+										//fuction for insert before particular position
+void insertbefore(struct node **s)
 {
 	if(*s==NULL)
 	{
@@ -170,6 +170,90 @@ void insertat(struct node **s)
 	}
 }
 
+														//insert after particular position
+														
+void insertafter(struct node **s)
+{
+	if(*s==NULL)
+	{
+		cout<<"List is empty choose option a "<<endl;
+		return;
+	}
+	else if((*s)->next==NULL)
+	{
+		cout<<"List has only one node choose option a or d"<<endl;
+		return;
+	}
+	
+	struct node*curr,*prev,*n;
+	int position,val;
+	int i=1;
+	
+	pos:
+	cout<<"Enter position you want to add new node:";
+	cin>>position;
+	position++;
+
+	
+
+	//for first position
+	if(position==1)
+	{
+		cout<<"choose option a for first position"<<endl;
+		return;
+	}
+	//othe than first
+	else 
+	{	//for invalid position
+		if(position <=0)
+		{
+			cout<<"Invalid position"<<endl;
+			goto pos;
+		}
+		//for valid position--------------
+		else
+		{
+			curr=*s;
+			while(i<position && curr->next!=NULL)
+			{
+				prev=curr;
+				curr=curr->next;
+				i++;
+			}
+			//for last
+			if(curr->next==NULL&&i==position-1)
+			{
+				n=(struct node*)malloc(sizeof(struct node));
+				cout<<"Enter the value:";
+				cin>>n->data;
+				
+				curr->next=n;
+				n->next=NULL;
+				cout<<"node inserted at position"<<position;
+				return;
+			}
+			
+			//for not available
+			if(i<position-1)
+			{
+				cout<<"Entered unavailable position"<<endl;
+				return;
+			}
+			//for available
+			else
+			{		
+				n=(struct node*)malloc(sizeof(struct node));
+				cout<<"Enter the value:";
+				cin>>n->data;
+				
+				prev->next=n;
+				n->next=curr;
+				cout<<"node inserted at position"<<position;
+			}
+		}
+	}
+}
+														
 
 												//deletefirst
 void deletefirst(struct node **s)
@@ -310,35 +394,33 @@ void deleterandom(struct node**s)
 
 void reverse(struct node**s )
 {
-	struct node*head=*s;
-	struct node*curr=*s;
-	struct node*temp=*s;
-	while(head->next !=NULL)
+	if(*s==NULL)
 	{
-		while(curr->next!=NULL)
-		{
-			curr=curr->next;
-		}
-		*s=curr;
-		
-		while(head->next!=curr)
-		{
-			temp=head;
-			while(temp->next!=curr)
-			{
-				temp=temp->next;
-			}
-			curr->next=temp;
-			curr=temp;
-		}
-		head->next=NULL;
-		curr->next=head;
+		cout<<"list is empty"<<endl;
+		return;
 	}
+	
+	if((*s)->next==NULL)
+	{
+		cout<<"list has only one node"<<endl;
+		return;
+	}
+	
+	struct node*prev=NULL;
+	struct node*curr=*s;
+	struct node*nxt=NULL;
+	
+	while(curr!=NULL)
+	{
+		nxt=curr->next;
+		curr->next=prev;
+		prev=curr;
+		curr=nxt;
+	}
+	*s=prev;
+	cout<<"linked list reversed"<<endl;
+	
 }
-
-
-
-
 												//view function
 void view(struct node *s )
 {
@@ -385,14 +467,17 @@ int main()
 	options:
 	cout<<"\n\n"<<"\t\t\t\t\t\t--------------------------"<<"\n\t\t\t\t\t\tNow you have options below"<<"\n\t\t\t\t\t\t--------------------------"<<endl;
 	cout<<"\n\n\t\t\t\t\t\ta->Insert at first"<<endl;
-	cout<<"\t\t\t\t\t\tb->view my list"<<endl;
-	cout<<"\t\t\t\t\t\tc->Exit the program"<<endl;
-	cout<<"\t\t\t\t\t\td->Insert at last"<<endl;
-	cout<<"\t\t\t\t\t\te->Insert at"<<endl;
-	cout<<"\t\t\t\t\t\tf->delete first"<<endl;
-	cout<<"\t\t\t\t\t\tg->delete last"<<endl;
-	cout<<"\t\t\t\t\t\th->delete random"<<endl;
+	cout<<"\t\t\t\t\t\tb->Insert at last"<<endl;
+	cout<<"\t\t\t\t\t\tc->Insert before position"<<endl;
+	cout<<"\t\t\t\t\t\td->Insert after position"<<endl;
+	cout<<"\t\t\t\t\t\te->delete first"<<endl;
+	cout<<"\t\t\t\t\t\tf->delete last"<<endl;
+	cout<<"\t\t\t\t\t\tg->delete random"<<endl;
+	cout<<"\t\t\t\t\t\th->view my list"<<endl;
 	cout<<"\t\t\t\t\t\ti->reverse the linked list "<<endl;
+	cout<<"\t\t\t\t\t\tj->Exit the program"<<endl;
+
+
 	cout<<"Enter your option:";
 	cin>>op;
 	
@@ -404,36 +489,40 @@ int main()
 		break;
 		
 		case 'b':
-		view(start);
-		break;
-		
-		
-		case 'c':
-		return 0;
-		break;
-		
-		case 'd':
 		insertatlast(start);
 		break;
 		
-		case 'e':
-		insertat(&start);
+		case 'c':
+		insertbefore(&start);
+		break;
+		
+		case 'd':
+		insertafter(&start);
 		break;
 
-		case 'f':
+		case 'e':
 		deletefirst(&start);
 		break;
 		
-		case 'g':
+		case 'f':
 		deletelast(&start);
 		break;
 		
-		case 'h':
+		case 'g':
 		deleterandom(&start);
+		break;
+		
+		case 'h':
+		view(start);
 		break;
 		
 		case 'i':
 		reverse(&start);
+		break;
+		
+		
+		case 'j':
+		return 0;
 		break;
 		
 		
