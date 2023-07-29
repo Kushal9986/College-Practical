@@ -513,6 +513,82 @@ void view(struct node *s )
 	}
 }
 
+
+																	//serch by value 
+ void searchbyvalue(struct node*s)
+{
+	if(s==NULL)
+	{
+		cout<<"List is empty"<<endl;
+		return;
+	}
+	
+	struct node*ptr=s;
+	int val;
+	cout<<"Enter the value you want to search"<<endl;
+	cin>>val;
+	int flag;
+	int i=0;
+
+    while (ptr!=NULL)  
+        {  
+            if(ptr->data == val)  
+            {  
+                cout<<"item found at location  "<<i+1<<endl;  
+                flag=0;  
+            }   
+            else  
+            {  
+                flag=1;  
+            }  
+            i++;  
+            ptr = ptr -> next;  
+        } 	
+		
+	    if(flag==1)  
+        {  
+            cout<<"Item not found\n";  
+        }  
+}
+
+
+									//search by position
+									
+void searchbyposition(struct node*s)
+{
+	if(s==NULL)
+	{
+		cout<<"list is empty"<<endl;
+		return;
+	}
+	
+	struct node*ptr=s;
+	int pos;
+	int i=1;
+	cout<<"enter the position you want to searh for"<<endl;
+	cin>>pos;
+	
+	while(i<pos&&ptr->next!=NULL)
+	{
+		ptr=ptr->next;
+		i++;
+	}
+	
+	if(pos>i)
+	{
+		cout<<"node not available"<<endl;
+	}
+	else
+	{
+		cout<<"value at node"<<i<<"is: "<<ptr->data<<endl;
+	}
+}
+
+
+
+
+
+
 int main()
 {
 	struct node*start=NULL;//head node pointer
@@ -550,6 +626,8 @@ int main()
 	cout<<"\t\t\t\t\t\tj->Exit the program"<<endl;
 	cout<<"\t\t\t\t\t\tk->Sort list in descending order"<<endl;
 	cout<<"\t\t\t\t\t\tl->Sort list in ascending order"<<endl;
+	cout<<"\t\t\t\t\t\tm->search in linked list by value"<<endl;
+	cout<<"\t\t\t\t\t\tn->search in linked list by position"<<endl;
 
 
 	cout<<"Enter your option:";
@@ -605,6 +683,14 @@ int main()
 		
 		case 'l':
 		sortascend(start);
+		break;
+		
+		case 'm':
+		searchbyvalue(start);
+		break;
+		
+		case 'n':
+		searchbyposition(start);
 		break;
 		
 		
