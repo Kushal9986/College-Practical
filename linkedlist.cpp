@@ -597,6 +597,7 @@ int main()
 	
 	char op;
 	
+	rechoose:
 	cout<<"do you want to start your linked list (y/n)"<<endl;
 	cin>>choice;
 	
@@ -604,10 +605,20 @@ int main()
 	{
 		createnode(&start);
 	}
+	
 	else
 	{
+		if(choice[0]=='n')
+		{
 		cout<<"Thanks for using"<<endl;
 		return 0;
+		}
+		
+		else
+		{
+			cout<<"please enter valid option"<<endl;
+			goto rechoose;
+		}
 	}
 
 	
