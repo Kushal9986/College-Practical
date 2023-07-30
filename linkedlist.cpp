@@ -619,15 +619,33 @@ int main()
 {
 	struct node*start=NULL;//head node pointer
 	
-	char choice[50];
+	char choice;
 	
 	char op;
 	
-	rechoose:
+
 	cout<<"do you want to start your linked list (y/n)"<<endl;
 	cin>>choice;
 	
-	if (choice[0]=='y')
+	
+			if(choice!='y'&& choice!='n')
+			{
+					cout<<"entered invalid choice\n program exited";
+					return 0;
+			}
+			
+			if (choice=='y')
+			{
+				createnode(&start);
+			}
+			else if(choice=='n')
+
+			{
+				cout<<"Thanks for using"<<endl;
+				return 0;
+			}
+	
+/*	if (choice[0]=='y')
 	{
 		createnode(&start);
 	}
@@ -645,7 +663,7 @@ int main()
 			cout<<"please enter valid option"<<endl;
 			goto rechoose;
 		}
-	}
+	}*/
 
 	
 	
@@ -670,8 +688,39 @@ int main()
 
 	cout<<"Enter your option:";
 	cin>>op;
-	
-	
+	/*cout<<"before try"<<endl;
+		try{			
+						cout<<"inside try"<<endl;	//error checking
+				if(op<'a'&& op>'o')
+			{
+					
+					//cout<<"enter valid choice\n";
+					//goto options;
+					//return 0;
+					throw op;
+			}
+		}
+
+		catch(char c)
+		{	
+			cout<<"inside catch"<<endl;
+			cout<<"enter valid choice\n";
+			return 0;
+		}
+			
+
+	*/
+	//error checking 
+				if(op>='a'  && op<='o')
+				{
+					cout<<"  valid choice\n";
+				}
+				else 
+				{
+					//goto options;
+					cout<<"entered invalid choice. program exited.\n";
+					return 0;
+				}
 	switch(op)
 	{
 		case 'a':
