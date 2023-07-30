@@ -421,8 +421,32 @@ void reverse(struct node**s )
 	cout<<"linked list reversed"<<endl;
 	
 }
-																		//sort the linked list ascending order
-																		
+
+													//node length
+int listlength(struct  node *s)
+{
+	struct node* curr=s;
+	int i=1;
+	if(curr==NULL)
+	{
+		cout<<"List is empty"<<endl;
+		
+	}
+	else
+	{
+		while(curr!=NULL)
+		{
+			curr=curr->next;
+			i++;
+		}
+	}
+	cout<<"Length of list is :"<<i-1;
+	return i-1;
+}
+
+
+
+																		//sort the linked list ascending order		
 void sortascend(struct node*s)
 {
 	if(s==NULL||s->next==NULL)
@@ -434,10 +458,10 @@ void sortascend(struct node*s)
 	struct node*curr=s;
 	struct node*temp=curr->next;
 	int val;
-	
-	for(int i=1; i<=4; i++)
+	int n=listlength(s);
+	for(int i=1; i<=n-1; i++)
 	{
-		for(int j=i+1; j<=5; j++ )
+		for(int j=i+1; j<=n; j++ )
 		{
 			if((temp->data)<(curr->data))
 			{
@@ -466,10 +490,12 @@ void sortdescend(struct node*s)
 	struct node*curr=s;
 	struct node*temp=curr->next;
 	int val;
+	int n=listlength(s);
+
 	
-	for(int i=1; i<=4; i++)
+	for(int i=1; i<=n-1; i++)
 	{
-		for(int j=i+1; j<=5; j++ )
+		for(int j=i+1; j<=n; j++ )
 		{
 			if((temp->data)>(curr->data))
 			{
@@ -639,6 +665,7 @@ int main()
 	cout<<"\t\t\t\t\t\tl->Sort list in ascending order"<<endl;
 	cout<<"\t\t\t\t\t\tm->search in linked list by value"<<endl;
 	cout<<"\t\t\t\t\t\tn->search in linked list by position"<<endl;
+	cout<<"\t\t\t\t\t\to->FInd length of list"<<endl;
 
 
 	cout<<"Enter your option:";
@@ -702,6 +729,10 @@ int main()
 		
 		case 'n':
 		searchbyposition(start);
+		break;
+		
+		case 'o':
+		listlength(start);
 		break;
 		
 		
