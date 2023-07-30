@@ -137,27 +137,15 @@ void insertbefore(struct node **s)
 		else
 		{
 			curr=*s;
-			while(i<=position-1&&curr->next!=NULL)
+			while(i<position&&curr->next!=NULL)
 			{
 				prev=curr;
 				curr=curr->next;
 				i++;
 			}
-			//for last
-			if(curr->next==NULL&&i==position-1)
-			{
-				cout<<"You have entered the last position .please choose insert at last for that"<<endl;
-				return;
-			}
-			//for not available
-			else if(i<position-1)
-			{
-				cout<<"Entered unavailable position"<<endl;
-				return;
-			}
 			//for available
-			else
-			{		
+			if(i==position)
+			{
 				n=(struct node*)malloc(sizeof(struct node));
 				cout<<"Enter the value:";
 				cin>>n->data;
@@ -165,6 +153,12 @@ void insertbefore(struct node **s)
 				prev->next=n;
 				n->next=curr;
 				cout<<"node inserted at position"<<position;
+			}
+			//for not available
+			else
+			{
+				cout<<"Entered unavailable position"<<endl;
+				return;
 			}
 		}
 	}
